@@ -1,0 +1,16 @@
+{
+  "name": "mojrokovnik-client",
+  "description": "Mojrokovnik Client Repository",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mojrokovnik/mojrokovnik-client",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-loader": "~1.4.0",
+    "angular-mocks": "~1.4.0",
+    "jquery": "2.1.4",
+    "jquery-ui": "1.11.2"
+  }
+}
