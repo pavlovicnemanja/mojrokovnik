@@ -1,0 +1,52 @@
+@import "mixins";
+@import "variables";
+
+// TOP NAVIGATION
+#nav-container {
+    background-color: @mr-violet;
+    height: 100vh;
+    .nav-item {
+        position: relative;
+        display: block;
+        width: 63px;
+        height: 60px;
+        text-align: center;
+        line-height: 64px;
+        .transition(all .5s);
+        i {
+            opacity: .5;
+            font-size: 26px;
+            .transition(opacity .5s);
+        }
+        &:hover, &.active {
+            background-color: @mr-orange;
+            i {
+                opacity: .8;
+            }
+            &:after {
+                opacity: 1;
+            }
+        }
+        &:after {
+            content: "";
+            position: absolute;
+            width: 0; 
+            height: 0;
+            right: -5px;
+            top: 50%;
+            opacity: 0;
+            margin-top: -5px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid @mr-orange;
+            .transition(all .5s);
+        }
+    }
+}
+
+#content-container {
+    .sidenav-section {
+        background-color: @mr-blue;
+        height: 100vh;
+    }
+}
