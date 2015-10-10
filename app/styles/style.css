@@ -1,0 +1,10 @@
+.test {
+  color: white;
+  white-space: nowrap;
+  color: yellow;
+  color: blue;
+}
+
+.test2 .test1 {
+  color: white;
+}
