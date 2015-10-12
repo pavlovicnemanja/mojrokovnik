@@ -12,6 +12,7 @@
     "grunt-contrib-less": "^1.0.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-http-server": "^1.10.1",
+    "http-server": "^0.6.1",
     "jasmine-core": "^2.3.4",
     "karma": "~0.12",
     "karma-chrome-launcher": "^0.1.12",
@@ -24,12 +25,18 @@
   "scripts": {
     "postinstall": "bower install",
 
+    "prestart": "npm install",
+    "start": "http-server -a localhost -p 8000 -c-1",
+
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run",
+
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
+
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor e2e-tests/protractor.conf.js"
-  }
+
+    }
 }
