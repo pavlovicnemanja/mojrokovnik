@@ -1,5 +1,7 @@
 # Mojrokovnik - Mojrokovnik Client Repo
 
+[![Build Status](https://travis-ci.org/mojrokovnik/mojrokovnik-client.png?branch=master)](https://travis-ci.org/superdeskmojrokovnik/mojrokovnik-client)
+
 ### Prerequisites
 
 You need git to clone the angular-seed repository. You can get git from
