@@ -1,5 +1,6 @@
 # Mojrokovnik - Mojrokovnik Client Repo
 [![Build Status](https://travis-ci.org/mojrokovnik/mojrokovnik-client.png?branch=master)](https://travis-ci.org/superdeskmojrokovnik/mojrokovnik-client)
+[![Coverage Status](https://coveralls.io/repos/mojrokovnik/mojrokovnik-client/badge.svg?branch=master&service=github)](https://coveralls.io/github/mojrokovnik/mojrokovnik-client?branch=master)
 
 ### Prerequisites
 
