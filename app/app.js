@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('mojrokovnik', ['ngRoute',
+    'mojrokovnik.api',
     'mojrokovnik.navigation',
     'mojrokovnik.dashboard'
 ]).
