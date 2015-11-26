@@ -1,22 +1,6 @@
 <?php
 
-require_once 'np-connect.php';
-require_once 'np-sanitize.php';
-
-/*
- * Setter for database functions
- * 
- * @param {string} $sql
- */
-
-function setterDatabase($sql) {
-    if ($GLOBALS['db']->query($sql) === TRUE) {
-        echo 'Total rows updated: ' . $GLOBALS['db']->affected_rows;
-    } else {
-        echo $GLOBALS['db']->errno;
-        echo "\nError creating table: " . $GLOBALS['db']->error;
-    }
-}
+header('Content-Type: application/json');
 
 /*
  * Getter for database functions
@@ -24,21 +8,72 @@ function setterDatabase($sql) {
  * @param {string} $sql
  */
 
-function getterDatabase($sql) {
-    $result = $GLOBALS['db']->query($sql);
+function getDatabase($sql, $params, $mysqli) {
+    if (!empty($params) && is_array($params)) {
+        $sql .= ' WHERE ';
+
+        $paramLength = count($params);
+        $i = 0;
+
+        foreach ($params as $var => $val) {
+            $sql .= $var . ' = "' . $val . '"';
+
+            if ($i !== $paramLength - 1) {
+                $sql .= ' AND ';
+            }
+
+            $i++;
+        }
+    }
+
+    $result = $mysqli->query($sql);
     $rows = array();
 
     while ($row = $result->fetch_assoc()) {
         $rows[] = $row;
     }
 
-//    $rows['params'] = sanitize($_GET);
-
-    header('Content-Type: application/json');
     echo json_encode($rows);
 }
 
+/*
+ * Setter for database functions
+ * 
+ * @param {string} $sql
+ */
 
-/*======================================================
-    SPECIFIC FUNCTIONS FOR PREPOPULATIONS
-=======================================================*/
+function setDatabase($table, $params, $mysqli) {
+    if (!empty($params) && is_array($params)) {
+        $sql = 'INSERT INTO ' . $table . ' WHERE ';
+
+        $vars = ''; $vals = '';
+
+        $paramLength = count($params);
+        $i = 0;
+
+        foreach ($params as $var => $val) {
+            $vars .= $var;
+            $vals .= $val;
+
+            if ($i !== $paramLength - 1) {
+                $vars .= ', ';
+                $vals .= ', ';
+            }
+
+            $i++;
+        }
+
+        $sql .= '(' . $vars . ') VALUES (' . $vals . ')';
+
+        if ($mysqli->query($sql) === TRUE) {
+            echo 'Total rows updated: ' . $mysqli->affected_rows;
+        } else {
+            echo $mysqli->errno;
+            echo "\nError creating table: " . $mysqli->error;
+        }
+    }
+}
+
+/* ======================================================
+      SPECIFIC FUNCTIONS FOR PREPOPULATIONS
+      ======================================================= */

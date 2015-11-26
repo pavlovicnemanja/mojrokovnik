@@ -17,29 +17,25 @@ clientsService.$inject = ['$http'];
 function clientsService($http) {
     this.fetchClients = function (params) {
         return $http({
-            url: '../server/controllers/np-database.php',
+            url: '../server/mr-client.php',
             method: 'GET',
             params: params
         }).then(function successCallback(response) {
-            return response;
+            return response.data;
         });
     };
-}
 
-casesService.$inject = ['$http'];
-function casesService($http) {
-    this.fetchCases = function (params) {
+    this.addClient = function (params) {
         return $http({
-            url: '../server/controllers/np-database.php',
-            method: 'GET',
+            url: '../server/mr-client.php',
+            method: 'POST',
             params: params
         }).then(function successCallback(response) {
-            return response;
+            return response.data;
         });
     };
 }
 
 angular.module('mojrokovnik.api', [])
         .service('usersService', clientsService)
-        .service('clientsService', clientsService)
-        .service('casesService', clientsService);
+        .service('clientsService', clientsService);

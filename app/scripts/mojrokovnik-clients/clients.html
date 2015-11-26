@@ -1,0 +1,10 @@
+<div clients-sidenav class="sidenav-section">
+    <ul>
+        <li ng-repeat="item in items track by item.client_id">{{ item.client_name }} {{item.client_surname}}</li>
+    </ul>
+</div>                
+<div clients-template class="content-section">
+    <div class="topnav-section">
+        <button ng-click="clientDialog($event)">Novi klijent</button>
+    </div>
+</div>

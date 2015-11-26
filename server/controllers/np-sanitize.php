@@ -1,7 +1,5 @@
 <?php
 
-require_once 'np-connect.php';
-
 /*
  * Function for stripping out malicious bits
  * 
@@ -28,17 +26,19 @@ function cleanInput($input) {
  * @return {string} $output
  */
 
-function sanitize($input) {
+function sanitize($input, $mysqli) {
+    $output = '';
     if (is_array($input)) {
         foreach ($input as $var => $val) {
-            $output[$var] = sanitize($val);
+            $output[$var] = sanitize($val, $mysqli);
         }
     } else {
         if (get_magic_quotes_gpc()) {
             $input = stripslashes($input);
         }
         $input = cleanInput($input);
-        $output = mysqli_real_escape_string($GLOBALS['db'], $input);
+        $output = mysqli_real_escape_string($mysqli, $input);
     }
+
     return $output;
 }

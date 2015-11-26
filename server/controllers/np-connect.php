@@ -1,7 +1,16 @@
 <?php
 
-$GLOBALS['db'] = new mysqli("localhost", "root", "", "mojrokovnik_db");
+define("HOST", "localhost");
+define("USER", "root");
+define("PASSWORD", "");
+define("DATABASE", "mojrokovnik_db");
 
-if ($GLOBALS['db']->connect_error) {
-    die("Connection failed: " . $GLOBALS['db']->connect_error);
+define("CAN_REGISTER", "any");
+define("DEFAULT_ROLE", "member");
+
+define("SECURE", FALSE);
+
+$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
 }
