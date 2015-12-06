@@ -18,6 +18,9 @@ if (login_check($mysqli) == true) {
         if (!empty($getters)) {
             $params = $getters;
         }
+        
+        $params['user_id'] = $_SESSION['user_id'];
+        $params['client_delete'] = 0;
 
         getDatabase($sql, $params, $mysqli);
     }
@@ -29,15 +32,39 @@ if (login_check($mysqli) == true) {
         if (!empty($getters)) {
             $params = $getters;
             $table = "clients";
+            
+            $params['user_id'] = $_SESSION['user_id'];
 
             setDatabase($table, $params, $mysqli);
         }
     }
 
     function updateClient($mysqli) {
+        $params = array();
+        $getters = sanitize($_GET, $mysqli);
+
+        if (!empty($getters)) {
+            $params = $getters;
+            $table = "clients";
+            $identifier = "client_id";
+            $controller = "user_id = " . $_SESSION['user_id'];
+
+            updateDatabase($table, $identifier, $controller, $params, $mysqli);
+        }
     }
 
     function deleteClient($mysqli) {
+        $params = array();
+        $getters = sanitize($_GET, $mysqli);
+
+        if (!empty($getters)) {
+            $flag = 'client_delete';
+            $table = "clients";
+            $identifier = "client_id = " . $getters['client_id'];
+            $controller = "user_id = " . $_SESSION['user_id'];
+
+            markForDelete($table, $identifier, $controller, $flag, $mysqli);
+        }
     }
 
     $method = sanitize($_SERVER['REQUEST_METHOD'], $mysqli);

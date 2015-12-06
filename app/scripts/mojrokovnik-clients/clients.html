@@ -1,10 +1,23 @@
 <div clients-sidenav class="sidenav-section">
-    <ul>
-        <li ng-repeat="item in items track by item.client_id">{{ item.client_name }} {{item.client_surname}}</li>
-    </ul>
+    <div class="topnav-section"></div>
+    <div class="sidenav-item" ng-repeat="client in clients track by client.client_id" ng-class="{active: client.client_id === selClient.client_id}" ng-click="selectClient(client)">
+        {{client.client_name}} {{client.client_surname}}
+        <span class="detail-info">
+            <i ng-if="client.client_city">{{client.client_city}}</i>
+            <i ng-if="client.client_state">, {{client.client_state}}</i>
+        </span>
+    </div>
+    <button class="btn btn--orange" ng-click="showDialog($event)">
+        <i class="icon-add-client"></i>
+        <span translate>Dodaj novog klijenta</span>
+    </button>
 </div>                
 <div clients-template class="content-section">
-    <div class="topnav-section">
-        <button ng-click="clientDialog($event)">Novi klijent</button>
-    </div>
+    <md-button class="md-raised md-primary" ng-click="showDialog($event, selClient)">Edit</md-button>
+    <md-button class="md-raised md-warn" ng-click="removeClient(selClient)">Delete</md-button>
+    {{selClient.client_name}}
+    {{selClient.client_surname}}
+    {{selClient.client_city}}
+    {{selClient.client_state}}
+    {{selClient.client_phone}}
 </div>

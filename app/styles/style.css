@@ -1,7 +1,48 @@
 /* Flex */
+* {
+  font-family: 'Open Sans', sans-serif;
+}
 a {
-  color: #ffffff;
+  color: #FFF;
   text-decoration: none;
+}
+button,
+.btn {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 8px 20px;
+  line-height: 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 0;
+  outline: none !important;
+  box-sizing: border-box;
+}
+button:focus,
+.btn:focus {
+  outline: none !important;
+}
+button:hover,
+.btn:hover,
+button:focus,
+.btn:focus {
+  background-color: rgba(0, 0, 0, 0.235);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: #333333;
+}
+.btn--orange {
+  color: #FFF;
+  background-color: #ee6c4d;
+}
+.btn--orange:hover,
+.btn--orange:focus {
+  color: #FFF;
+  background-color: #c94224;
 }
 
 /* Flex */
@@ -30,6 +71,58 @@ a {
 }
 #main-container #content-container .content-section .topnav-section {
   background-color: #dcdcdc;
+}
+
+/* Flex */
+.login-page {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #FFF;
+  background-image: url('images/landing-bg.jpg');
+  background-size: cover;
+}
+.login-page .login-container {
+  position: absolute;
+  right: 100px;
+  bottom: 100px;
+}
+.login-page .input-container {
+  margin-bottom: 15px;
+}
+.login-page .input-container i {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: #ee6c4d;
+}
+.login-page .input-container i:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: -5px;
+  top: 50%;
+  margin-top: -5px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid #ee6c4d;
+}
+.login-page .input-container input {
+  width: 400px;
+  height: 36px;
+  padding-left: 10px;
+  margin-left: -5px;
+  border: 1px solid #eaeaea;
+}
+.login-page .input-container input:focus {
+  border: 1px solid #ee6c4d;
+  outline: 0;
 }
 
 /* Flex */
@@ -82,8 +175,52 @@ a {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
-#content-container .sidenav-section {
+.sidenav-section {
   background-color: #0d1b2a;
   height: 100vh;
+}
+.sidenav-section .sidenav-item {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 25px 45px;
+  color: #eaeaea;
+  background-color: #0d1b2a;
+  cursor: pointer;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.sidenav-section .sidenav-item .detail-info {
+  display: block;
+}
+.sidenav-section .sidenav-item i {
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 20px;
+  color: #425069;
+}
+.sidenav-section .sidenav-item:hover,
+.sidenav-section .sidenav-item.active {
+  background-color: #eaeaea;
+  color: #0d1b2a;
+}
+.sidenav-section .sidenav-item:focus {
+  box-shadow: none;
+  outline: none;
+}
+.sidenav-section > .btn {
+  position: fixed;
+  width: 326px;
+  padding: 15px 20px;
+  bottom: 0;
+  border-radius: 0;
+}
+.sidenav-section > .btn span {
+  vertical-align: text-bottom;
+}
+.sidenav-section > .btn i {
+  margin-right: 20px;
+  font-size: 32px;
 }
 

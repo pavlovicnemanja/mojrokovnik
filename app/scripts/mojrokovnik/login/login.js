@@ -1,11 +1,26 @@
 'use strict';
 
-angular.module('mojrokovnik.login', [])
-        .directive('mrLogin', function ($location) {
-            return {
-                templateUrl: 'scripts/mojrokovnik/login/login.html',
-                link: function (scope, elem) {
-
-                }
-            };
+mrLoginCtrl.$inject = ['$location', '$http', '$cookies', '$scope', 'notificationService', 'userService'];
+function mrLoginCtrl($location, $http, $cookies, $scope, notificationService, userService) {
+    $scope.login = function (login) {
+        $http({
+            url: '../server/mr-login.php',
+            method: 'POST',
+            params: login
+        }).then(function successCallback(response) {
+            if (response.data.login) {
+                userService.fetchUser().then(function (user) {
+                    if (user) {
+                        $cookies.putObject('user', user);
+                        $location.url('/clients');
+                    }
+                });
+            } else {
+                notificationService.show(response.data['msg']);
+            }
         });
+    };
+}
+
+angular.module('mojrokovnik.login', [])
+        .controller('mrLoginCtrl', mrLoginCtrl);

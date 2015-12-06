@@ -43,10 +43,49 @@
         }
     }
 }
-
-#content-container {
-    .sidenav-section {
+.sidenav-section {
+    background-color: @mr-blue;
+    height: 100vh;
+    .sidenav-item {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 25px 45px;
+        color: @mr-gray;
         background-color: @mr-blue;
-        height: 100vh;
+        cursor: pointer;
+        .transition(all .5s);
+        .detail-info {
+            display: block;
+        }
+        i {
+            font-size: 12px;
+            font-weight: 600;
+            font-style: normal;
+            line-height: 20px;
+            color: #425069;
+        }
+        &:hover, &.active {
+            background-color: @mr-gray;
+            color: @mr-blue;
+        }
+        &:focus {
+            box-shadow: none;
+            outline: none;
+        }
+    }
+    > .btn {
+        position: fixed;
+        width: @sidenav-w;
+        padding: 15px 20px;
+        bottom: 0;
+        border-radius: 0;
+        span {
+            vertical-align: text-bottom;
+        }
+        i {
+            margin-right: 20px;
+            font-size: 32px;
+        }
     }
 }

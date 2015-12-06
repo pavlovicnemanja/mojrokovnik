@@ -1,13 +1,64 @@
 <md-dialog>
     <form>
         <md-toolbar>
-            <h2>Dialog Heading</h2>
+            <h2 ng-if="!client" translate>Dodaj klijenta</h2>
+            <h2 ng-if="client" translate>Izmeni klijenta</h2>
         </md-toolbar>
-        <md-dialog-content>
-            This is dialog content
+        <md-dialog-content style="width:650px">
+            
+            <md-input-container>
+                <label translate>Ime</label>
+                <input type="text" ng-model="client.client_name">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Prezime</label>
+                <input type="text" ng-model="client.client_surname">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Adresa</label>
+                <input type="text" ng-model="client.client_address">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Grad</label>
+                <input type="text" ng-model="client.client_city">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Država</label>
+                <input type="text" ng-model="client.client_state">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Državljanstvo</label>
+                <input type="text" ng-model="client.client_citizenship">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Telefon</label>
+                <input type="text" ng-model="client.client_phone">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Email</label>
+                <input type="text" ng-model="client.client_email">
+            </md-input-container>
+            <md-input-container>
+                <label translate>JMBG</label>
+                <input type="text" ng-model="client.client_socialNumber">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Broj lične karte</label>
+                <input type="text" ng-model="client.client_idNumber">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Tekući račun</label>
+                <input type="text" ng-model="client.client_accountNumber">
+            </md-input-container>
+            <md-input-container>
+                <label translate>Komentar</label>
+                <textarea ng-model="client.client_comment"></textarea>
+            </md-input-container>
+            
         </md-dialog-content>
         <md-dialog-actions layout="row">
-            <button>Submit</button>
+            <md-button class="md-raised md-primary" ng-click="save(client)" translate>U redu</md-button>
+            <md-button class="md-raised md-warn" ng-click="cancel()" translate>Otkaži</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

@@ -1,15 +1,21 @@
 'use strict';
 
-mojrokovnikAuth.$inject = [];
-function mojrokovnikAuth() {
-    var user;
-    return {
-        setUser: function (aUser) {
-            user = aUser;
-        },
-        isLoggedIn: function () {
-            return(user) ? user : false;
+mojrokovnikAuth.$inject = ['userService', '$cookies'];
+function mojrokovnikAuth(userService, $cookies) {
+    var self = this;
+
+    userService.fetchUser().then(function (user) {
+        if (user) {
+            self.user = user;
         }
+    });
+
+    this.getUser = function () {
+        return self.user;
+    };
+
+    this.isLoggedIn = function () {
+        return !!$cookies.getObject('user');
     };
 }
 
@@ -24,11 +30,24 @@ function mojrokovnikConf($routeProvider) {
     });
 }
 
-angular.module('mojrokovnik', ['ngRoute',
+angular.module('mojrokovnik', [
+    'ngRoute', 'ngCookies',
     'mojrokovnik.api',
     'mojrokovnik.login',
     'mojrokovnik.navigation',
+    'mojrokovnik.notification',
     'mojrokovnik.clients'
 ])
-.factory('authentification', mojrokovnikAuth)
-.config(['$routeProvider', mojrokovnikConf]);
+.service('authentification', mojrokovnikAuth)
+.config(['$routeProvider', mojrokovnikConf])
+.run(function ($rootScope, $location, authentification) {
+
+    $rootScope.$on('$routeChangeStart', function (event, next) {
+        if (authentification.isLoggedIn()) {
+            $location.url('/clients');
+        } else {
+            $location.url('/login');
+        }
+    });
+
+});

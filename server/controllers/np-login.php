@@ -20,7 +20,8 @@ function login($email, $password, $mysqli) {
             if (checkbrute($user_id, $mysqli) == true) {
                 // Account is locked 
                 // Send an email to user saying their account is locked
-                echo 'Account is locked';
+                
+                echo json_encode(array("msg" => "Account is locked!"));
                 return false;
             } else {          
                 // Check if the password in the database matches
@@ -37,20 +38,22 @@ function login($email, $password, $mysqli) {
                     $_SESSION['username'] = $username;
                     $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
                     // Login successful.
-                    echo 'Succesfully logged in';
+                    
                     return true;
                 } else {
                     // Password is not correct
                     // We record this attempt in the database
                     $now = time();
                     $mysqli->query("INSERT INTO login_attempts(user_id, time) VALUES ('$user_id', '$now')");
-                    echo 'Password is not correct';
+                    
+                    echo json_encode(array("msg" => "Password is not correct!"));
                     return false;
                 }
             }
         } else {
             // No user exists.
-            echo "User doesn't exist";
+            
+            echo json_encode(array("msg" => "User doesn't exist!"));
             return false;
         }
     }

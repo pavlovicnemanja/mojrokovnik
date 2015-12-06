@@ -38,30 +38,52 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-white:before {
+    color: white;
+}
+
 .icon-dashboard:before {
-  content: "a";
+  content: "\61";
 }
 .icon-calendar:before {
-  content: "b";
+  content: "\62";
 }
 .icon-agreements:before {
-  content: "c";
+  content: "\63";
 }
 .icon-folders:before {
-  content: "d";
+  content: "\64";
 }
 .icon-associates:before {
-  content: "e";
-}
-.icon-courts:before {
-  content: "f";
+  content: "\65";
 }
 .icon-remittance:before {
-  content: "g";
+  content: "\67";
 }
 .icon-clients:before {
-  content: "h";
+  content: "\68";
 }
 .icon-stats:before {
-  content: "i";
+  content: "\69";
+}
+.icon-courts:before {
+  content: "\66";
+}
+.icon-add-client:before {
+  content: "\6a";
+}
+.icon-close:before {
+  content: "\6b";
+}
+.icon-location:before {
+  content: "\6c";
+}
+.icon-login-user:before {
+  content: "\6d";
+}
+.icon-login-password:before {
+  content: "\6e";
+}
+.icon-login-register:before {
+  content: "\6f";
 }

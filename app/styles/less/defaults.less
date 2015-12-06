@@ -1,7 +1,45 @@
 @import "mixins";
 @import "variables";
 
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
 a {
     color: @white;
     text-decoration: none;
+}
+
+button, .btn {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 8px 20px;
+    line-height: 12px;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 0;
+    outline: none !important;
+    box-sizing: border-box;
+    &:focus {
+        outline: none !important;
+    }
+    &:hover, &:focus {
+        background-color: rgba(0, 0, 0, 0.235);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        text-decoration: none;
+        color: #333333;
+    }
+}
+
+.btn--orange {
+    color: @white;
+    background-color: @mr-orange;
+    &:hover, &:focus {
+        color: @white;
+        background-color: #c94224;
+    }
 }
