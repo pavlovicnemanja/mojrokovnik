@@ -1,5 +1,5 @@
-# Mojrokovnik - Mojrokovnik Client Repo
-[![Build Status](https://travis-ci.org/mojrokovnik/mojrokovnik-client.png?branch=master)](https://travis-ci.org/superdeskmojrokovnik/mojrokovnik-client)
+# Mojrokovnik - Mojrokovnik Repo
+[![Build Status](https://travis-ci.org/mojrokovnik/mojrokovnik.png?branch=master)](https://travis-ci.org/mojrokovnik/mojrokovnik)
 
 ### Prerequisites
 
