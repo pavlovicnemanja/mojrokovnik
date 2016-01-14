@@ -1,0 +1,23 @@
+<div cases-sidenav class="sidenav-section">
+    <div class="topnav-section"></div>
+    <div class="sidenav-item" ng-repeat="singleCase in cases track by singleCase.case_id" ng-class="{active: singleCase.case_id === selCase.case_id}" ng-click="selectCase(singleCase)">
+        {{singleCase.case_number}} - {{singleCase.case_name}}
+        <span class="detail-info">
+            <i ng-if="singleCase.case_rivalName">{{singleCase.case_rivalName}} {{singleCase.case_rivalSurname}}</i>
+            <i ng-if="singleCase.case_judge">, {{singleCase.case_judge}}</i>
+        </span>
+    </div>
+    <button class="btn btn--orange" ng-click="showDialog()">
+        <i class="icon-add-client"></i>
+        <span translate>Dodaj novog klijenta</span>
+    </button>
+</div>
+<div cases-template class="content-section">
+    <md-button class="md-raised md-primary" ng-click="showDialog(selCase)">Edit</md-button>
+    <md-button class="md-raised md-warn" ng-click="removeCase(selCase)">Delete</md-button>
+    {{selCase.cases_name}}
+    {{selCase.cases_surname}}
+    {{selCase.cases_city}}
+    {{selCase.cases_state}}
+    {{selCase.cases_phone}}
+</div>

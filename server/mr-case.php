@@ -9,13 +9,13 @@ secure_session_start();
 
 if (login_check($mysqli) == true) {
 
-    function setClient($mysqli) {
+    function setCase($mysqli) {
         $params = array();
         $getters = sanitize($_GET, $mysqli);
 
         if (!empty($getters)) {
             $params = $getters;
-            $table = "clients";
+            $table = "cases";
             
             $params['user_id'] = $_SESSION['user_id'];
 
@@ -23,44 +23,44 @@ if (login_check($mysqli) == true) {
         }
     }
 
-    function getClient($mysqli) {
+    function getCase($mysqli) {
         $params = array();
         $getters = sanitize($_GET, $mysqli);
 
-        $sql = "SELECT * FROM clients";
+        $sql = "SELECT * FROM cases";
 
         if (!empty($getters)) {
             $params = $getters;
         }
         
         $params['user_id'] = $_SESSION['user_id'];
-        $params['client_delete'] = 0;
+        $params['case_delete'] = 0;
 
         getDatabase($sql, $params, $mysqli);
     }
 
-    function updateClient($mysqli) {
+    function updateCase($mysqli) {
         $params = array();
         $getters = sanitize($_GET, $mysqli);
 
         if (!empty($getters)) {
             $params = $getters;
-            $table = "clients";
-            $identifier = "client_id";
+            $table = "cases";
+            $identifier = "case_id";
             $controller = "user_id = " . $_SESSION['user_id'];
 
             updateDatabase($table, $identifier, $controller, $params, $mysqli);
         }
     }
 
-    function deleteClient($mysqli) {
+    function deleteCase($mysqli) {
             $params = array();
             $getters = sanitize($_GET, $mysqli);
 
             if (!empty($getters)) {
-                $flag = 'client_delete';
-                $table = "clients";
-                $identifier = "client_id = " . $getters['client_id'];
+                $flag = 'case_delete';
+                $table = "cases";
+                $identifier = "case_id = " . $getters['case_id'];
                 $controller = "user_id = " . $_SESSION['user_id'];
 
                 markForDelete($table, $identifier, $controller, $flag, $mysqli);
@@ -69,13 +69,13 @@ if (login_check($mysqli) == true) {
 
     $method = sanitize($_SERVER['REQUEST_METHOD'], $mysqli);
     switch ($method) {
-        case 'POST' : setClient($mysqli);
+        case 'POST' : setCase($mysqli);
             break;
-        case 'GET' : getClient($mysqli);
+        case 'GET' : getCase($mysqli);
             break;
-        case 'PUT' : updateClient($mysqli);
+        case 'PUT' : updateCase($mysqli);
             break;
-        case 'DELETE' : deleteClient($mysqli);
+        case 'DELETE' : deleteCase($mysqli);
             break;
     }
 } else {

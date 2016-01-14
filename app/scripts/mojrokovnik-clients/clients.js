@@ -1,26 +1,11 @@
 'use strict';
 
-clientsCtrl.$inject = ['$scope', 'clientsService', '$mdDialog'];
-function clientsCtrl($scope, clientsService, $mdDialog) {
-    $scope.getClients = function () {
-        clientsService.fetchClients().then(function (clients) {
-            $scope.clients = clients;
-            $scope.selClient = clients[0];
-        });
-    };
-
-    $scope.showDialog = function (event, client) {
-        $mdDialog.show({
-            scope: $scope,
-            preserveScope: true,
-            locals: client,
-            controller: dialogCtrl,
-            templateUrl: 'scripts/mojrokovnik-clients/clients-dialog.html',
-            parent: angular.element(document.body),
-            targetEvent: event,
-            clickOutsideToClose: true
-        });
-    };
+clientsCtrl.$inject = ['$scope', 'clientsService', '$uibModal'];
+function clientsCtrl($scope, clientsService, $uibModal) {
+    clientsService.fetchClients().then(function (clients) {
+        $scope.clients = clients;
+        $scope.selClient = clients[0];
+    });
 
     $scope.selectClient = function (client) {
         $scope.selClient = client;
@@ -33,29 +18,42 @@ function clientsCtrl($scope, clientsService, $mdDialog) {
         });
     };
 
-    $scope.getClients();
-}
-
-dialogCtrl.$inject = ['$scope', '$mdDialog', 'clientsService', 'locals'];
-function dialogCtrl($scope, $mdDialog, clientsService, locals) {
-    $scope.client = locals;
-
-    $scope.save = function (client) {
-        if (locals) {
-            clientsService.updateClient(client).then(function () {
-                $mdDialog.hide();
-            });
+    $scope.showDialog = function (client) {
+        if (client) {
+            $scope.client = client;
+            $scope.editMode = true;
         } else {
-            clientsService.addClient(client).then(function () {
-                $scope.clients.push(client);
-                $mdDialog.hide();
-            });
+            delete $scope.client;
+            $scope.editMode = false;
         }
+
+        $uibModal.open({
+            animation: true,
+            scope: $scope,
+            templateUrl: 'scripts/mojrokovnik-clients/clients-dialog.html',
+            controller: clientDialogCtrl
+        });
     };
 
-    $scope.cancel = function () {
-        $mdDialog.cancel();
-    };
+    function clientDialogCtrl($uibModalInstance) {
+        $scope.save = function (client) {
+            if ($scope.editMode) {
+                clientsService.updateClient(client).then(function () {
+                    $scope.editMode = false;
+                    $uibModalInstance.close();
+                });
+            } else {
+                clientsService.addClient(client).then(function () {
+                    $scope.clients.push(client);
+                    $uibModalInstance.close();
+                });
+            }
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+        };
+    }
 }
 
 clientsSidenav.$inject = [];

@@ -1,15 +1,15 @@
 <div class="login-page" ng-controller="mrLoginCtrl">
-    <div class="login-container">
+    <form class="login-container">
         <div class="input-container">
             <i class="icon-login-user icon-white"></i>
-            <input name="email" type="text" placeholder="Username" ng-model="login.email" />
+            <input name="email" type="text" placeholder="Username" ng-model="login.email" autofocus/>
         </div>
         <div class="input-container">
             <i class="icon-login-password icon-white"></i>
             <input name="password" type="password" placeholder="Password" ng-model="login.password" />
         </div>
         <div class="button-container">
-            <button class="btn--orange" ng-click="login(login)">
+            <button type="submit" class="btn--orange" ng-click="login(login)">
                 <i class="icon-login-password icon-white"></i>
                 Submit
             </button>
@@ -18,5 +18,5 @@
                 Register
             </button>
         </div>
-    </div>
+    </form>
 </div>

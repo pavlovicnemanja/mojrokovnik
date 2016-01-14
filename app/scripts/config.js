@@ -22,11 +22,17 @@ function mojrokovnikAuth(userService, $cookies) {
 mojrokovnikConf.$inject = ['$routeProvider'];
 function mojrokovnikConf($routeProvider) {
     $routeProvider.otherwise({redirectTo: '/clients'});
+    $routeProvider.when('/login', {
+        templateUrl: 'scripts/mojrokovnik/login/login.html'
+    });
     $routeProvider.when('/clients', {
         templateUrl: 'scripts/mojrokovnik-clients/clients.html'
     });
-    $routeProvider.when('/login', {
-        templateUrl: 'scripts/mojrokovnik/login/login.html'
+    $routeProvider.when('/cases', {
+        templateUrl: 'scripts/mojrokovnik-cases/cases.html'
+    });
+    $routeProvider.when('/calendar', {
+        templateUrl: 'scripts/mojrokovnik-calendar/calendar.html'
     });
 }
 
@@ -35,17 +41,18 @@ angular.module('mojrokovnik', [
     'mojrokovnik.api',
     'mojrokovnik.login',
     'mojrokovnik.navigation',
-    'mojrokovnik.notification',
-    'mojrokovnik.clients'
+    'mojrokovnik.notify',
+
+    'mojrokovnik.clients',
+    'mojrokovnik.calendar',
+    'mojrokovnik.cases'
 ])
 .service('authentification', mojrokovnikAuth)
 .config(['$routeProvider', mojrokovnikConf])
 .run(function ($rootScope, $location, authentification) {
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
-        if (authentification.isLoggedIn()) {
-            $location.url('/clients');
-        } else {
+        if (!authentification.isLoggedIn()) {
             $location.url('/login');
         }
     });

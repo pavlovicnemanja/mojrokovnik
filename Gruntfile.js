@@ -9,7 +9,7 @@ module.exports = function (grunt) {
                     yuicompress: true
                 },
                 files: {
-                    'app/styles/style.css': 'app/**/*.less'
+                    'app/styles/style.css': ['app/**/*.less', '!app/scripts/bower_components/**/*.less']
                 }
             }
         },

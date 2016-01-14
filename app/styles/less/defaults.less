@@ -5,7 +5,7 @@
     font-family: 'Open Sans', sans-serif;
 }
 
-a {
+a, a:hover, a:focus {
     color: @white;
     text-decoration: none;
 }
@@ -42,4 +42,9 @@ button, .btn {
         color: @white;
         background-color: #c94224;
     }
+}
+
+// ANGULAR MATERIAL FIXES
+.md-select-menu-container {
+    z-index: 2001;
 }

@@ -1,7 +1,7 @@
 'use strict';
 
-mrLoginCtrl.$inject = ['$location', '$http', '$cookies', '$scope', 'notificationService', 'userService'];
-function mrLoginCtrl($location, $http, $cookies, $scope, notificationService, userService) {
+mrLoginCtrl.$inject = ['$location', '$http', '$cookies', '$scope', 'notify', 'userService'];
+function mrLoginCtrl($location, $http, $cookies, $scope, notify, userService) {
     $scope.login = function (login) {
         $http({
             url: '../server/mr-login.php',
@@ -16,7 +16,7 @@ function mrLoginCtrl($location, $http, $cookies, $scope, notificationService, us
                     }
                 });
             } else {
-                notificationService.show(response.data['msg']);
+                notify.error(response.data['msg']);
             }
         });
     };

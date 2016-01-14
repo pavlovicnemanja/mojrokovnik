@@ -3,6 +3,22 @@
 header('Content-Type: application/json');
 
 /*
+ * Executes clean sql scripts
+ * 
+ * $param {string} $sql
+ */
+
+function exSQL($sql, $mysqli) {
+    $mysqli->query('SET NAMES utf8');
+
+    if ($mysqli->query($sql) === TRUE) {
+        echo json_encode(array('msg' => 'Total rows updated: ' . $mysqli->affected_rows));
+    } else {
+        echo json_encode(array("msg" => 'Error setting database: ' . $mysqli->error));
+    }
+}
+
+/*
  * Getter for database functions
  * 
  * @param {string} $sql
@@ -25,6 +41,8 @@ function getDatabase($sql, $params, $mysqli) {
             $i++;
         }
     }
+
+    $mysqli->query('SET NAMES utf8');
 
     $result = $mysqli->query($sql);
     $rows = array();
@@ -66,6 +84,8 @@ function setDatabase($table, $params, $mysqli) {
 
         $sql .= '(' . $vars . ') VALUES (' . $vals . ')';
 
+        $mysqli->query('SET NAMES utf8');
+
         if ($mysqli->query($sql) === TRUE) {
             echo json_encode(array('msg' => 'Total rows updated: ' . $mysqli->affected_rows));
         } else {
@@ -100,8 +120,10 @@ function updateDatabase($table, $identifier, $controller, $params, $mysqli) {
 
             $i++;
         }
-        
+
         $sql .= ' WHERE ' . $identifier . ' AND ' . $controller;
+
+        $mysqli->query('SET NAMES utf8');
 
         if ($mysqli->query($sql) === TRUE) {
             echo json_encode(array('msg' => 'Total rows updated: ' . $mysqli->affected_rows));
@@ -120,6 +142,8 @@ function updateDatabase($table, $identifier, $controller, $params, $mysqli) {
 function markForDelete($table, $identifier, $controller, $flag, $mysqli) {
     if (!empty($identifier) && !empty($flag)) {
         $sql = 'UPDATE ' . $table . ' SET ' . $flag . '=1' . ' WHERE ' . $identifier . ' AND ' . $controller;
+
+        $mysqli->query('SET NAMES utf8');
 
         if ($mysqli->query($sql) === TRUE) {
             echo json_encode(array('msg' => 'Total rows updated: ' . $mysqli->affected_rows));

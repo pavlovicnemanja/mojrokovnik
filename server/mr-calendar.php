@@ -9,73 +9,73 @@ secure_session_start();
 
 if (login_check($mysqli) == true) {
 
-    function setClient($mysqli) {
+    function setCalendar($mysqli) {
         $params = array();
         $getters = sanitize($_GET, $mysqli);
 
         if (!empty($getters)) {
             $params = $getters;
-            $table = "clients";
-            
+            $table = "calendar";
+
             $params['user_id'] = $_SESSION['user_id'];
 
             setDatabase($table, $params, $mysqli);
         }
     }
 
-    function getClient($mysqli) {
+    function getCalendar($mysqli) {
         $params = array();
         $getters = sanitize($_GET, $mysqli);
 
-        $sql = "SELECT * FROM clients";
+        $sql = "SELECT * FROM calendar";
 
         if (!empty($getters)) {
             $params = $getters;
         }
-        
+
         $params['user_id'] = $_SESSION['user_id'];
-        $params['client_delete'] = 0;
+        $params['calendar_delete'] = 0;
 
         getDatabase($sql, $params, $mysqli);
     }
 
-    function updateClient($mysqli) {
+    function updateCalendar($mysqli) {
         $params = array();
         $getters = sanitize($_GET, $mysqli);
 
         if (!empty($getters)) {
             $params = $getters;
-            $table = "clients";
-            $identifier = "client_id";
+            $table = "calendar";
+            $identifier = "calendar_id";
             $controller = "user_id = " . $_SESSION['user_id'];
 
             updateDatabase($table, $identifier, $controller, $params, $mysqli);
         }
     }
 
-    function deleteClient($mysqli) {
-            $params = array();
-            $getters = sanitize($_GET, $mysqli);
+    function deleteCalendar($mysqli) {
+        $params = array();
+        $getters = sanitize($_GET, $mysqli);
 
-            if (!empty($getters)) {
-                $flag = 'client_delete';
-                $table = "clients";
-                $identifier = "client_id = " . $getters['client_id'];
-                $controller = "user_id = " . $_SESSION['user_id'];
+        if (!empty($getters)) {
+            $flag = 'calendar_delete';
+            $table = "calendar";
+            $identifier = "calendar_id = " . $getters['calendar_id'];
+            $controller = "user_id = " . $_SESSION['user_id'];
 
-                markForDelete($table, $identifier, $controller, $flag, $mysqli);
-            }
+            markForDelete($table, $identifier, $controller, $flag, $mysqli);
+        }
     }
 
     $method = sanitize($_SERVER['REQUEST_METHOD'], $mysqli);
     switch ($method) {
-        case 'POST' : setClient($mysqli);
+        case 'POST' : setCalendar($mysqli);
             break;
-        case 'GET' : getClient($mysqli);
+        case 'GET' : getCalendar($mysqli);
             break;
-        case 'PUT' : updateClient($mysqli);
+        case 'PUT' : updateCalendar($mysqli);
             break;
-        case 'DELETE' : deleteClient($mysqli);
+        case 'DELETE' : deleteCalendar($mysqli);
             break;
     }
 } else {

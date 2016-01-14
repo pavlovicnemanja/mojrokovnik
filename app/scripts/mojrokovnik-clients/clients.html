@@ -7,13 +7,13 @@
             <i ng-if="client.client_state">, {{client.client_state}}</i>
         </span>
     </div>
-    <button class="btn btn--orange" ng-click="showDialog($event)">
+    <button class="btn btn--orange" ng-click="showDialog()">
         <i class="icon-add-client"></i>
         <span translate>Dodaj novog klijenta</span>
     </button>
 </div>                
 <div clients-template class="content-section">
-    <md-button class="md-raised md-primary" ng-click="showDialog($event, selClient)">Edit</md-button>
+    <md-button class="md-raised md-primary" ng-click="showDialog(selClient)">Edit</md-button>
     <md-button class="md-raised md-warn" ng-click="removeClient(selClient)">Delete</md-button>
     {{selClient.client_name}}
     {{selClient.client_surname}}
