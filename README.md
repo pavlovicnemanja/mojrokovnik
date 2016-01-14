@@ -1,5 +1,5 @@
 # Mojrokovnik - Mojrokovnik Repo
-[![Build Status](https://travis-ci.org/mojrokovnik/mojrokovnik.png?branch=master)](https://travis-ci.org/mojrokovnik/mojrokovnik)
+[![Build Status](https://travis-ci.org/mojrokovnik/mojrokovnik.svg?branch=master)](https://travis-ci.org/mojrokovnik/mojrokovnik)
 
 ### Prerequisites
 
