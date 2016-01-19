@@ -1,7 +1,7 @@
 'use strict';
 
-calendarTemplate.$inject = ['calendarService'];
-function calendarTemplate(calendarService) {
+calendarTemplate.$inject = ['api'];
+function calendarTemplate(api) {
     return {
         controller: calendarCtrl,
         link: function (scope, element, attr, ctrl) {
@@ -13,7 +13,7 @@ function calendarTemplate(calendarService) {
              * @param {Object} events
              * @return {Function} initializeCalendar
              */
-            calendarService.fetchCalendar().then(function (events) {
+            api('calendars').fetch().then(function (events) {
                 var filterEvents = [];
                 angular.forEach(events, function (item) {
                     filterEvents.push({
@@ -75,8 +75,8 @@ function calendarTemplate(calendarService) {
 }
 
 
-calendarCtrl.$inject = ['$scope', '$q', '$uibModal', 'calendarService', 'clientsService', 'casesService'];
-function calendarCtrl($scope, $q, $uibModal, calendarService, clientsService, casesService) {
+calendarCtrl.$inject = ['$scope', '$q', '$uibModal', 'api'];
+function calendarCtrl($scope, $q, $uibModal, api) {
 
     /*
      * Triggering modal for adding new event to calendar
@@ -103,13 +103,13 @@ function calendarCtrl($scope, $q, $uibModal, calendarService, clientsService, ca
         });
 
         // Return clients list
-        var clients = clientsService.fetchClients();
+        api('clients').fetch().then(function (clients) {
+            $scope.clients = clients;
+        });
 
         // Return cases list
-        var cases = casesService.fetchCases();
-
-        $q.all([clients, cases]).then(function (values) {
-            console.log(values);
+        api('cases').fetch().then(function (cases) {
+            $scope.cases = cases;
         });
 
         // Default types for 'type' field
@@ -137,7 +137,7 @@ function calendarCtrl($scope, $q, $uibModal, calendarService, clientsService, ca
             calendar.calendar_startDate = new Date(startTime + ' ' + startDate);
             calendar.calendar_endDate = new Date(endTime + ' ' + endDate);
 
-            calendarService.addCalendar(calendar).then(function () {
+            api('calendars').add(calendar).then(function () {
                 $scope.createEvent(calendar);
                 $uibModalInstance.close();
             });

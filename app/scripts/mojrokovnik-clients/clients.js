@@ -1,8 +1,9 @@
 'use strict';
 
-clientsCtrl.$inject = ['$scope', 'clientsService', '$uibModal'];
-function clientsCtrl($scope, clientsService, $uibModal) {
-    clientsService.fetchClients().then(function (clients) {
+clientsCtrl.$inject = ['$scope', 'api', '$uibModal'];
+function clientsCtrl($scope, api, $uibModal) {
+
+    api('clients').fetch().then(function (clients) {
         $scope.clients = clients;
         $scope.selClient = clients[0];
     });
@@ -12,7 +13,7 @@ function clientsCtrl($scope, clientsService, $uibModal) {
     };
 
     $scope.removeClient = function (client) {
-        clientsService.deleteClient(client).then(function () {
+        api('clients').delete(client).then(function () {
             $scope.clients = _.without($scope.clients, client);
             $scope.selClient = $scope.clients[0];
         });
@@ -38,12 +39,12 @@ function clientsCtrl($scope, clientsService, $uibModal) {
     function clientDialogCtrl($uibModalInstance) {
         $scope.save = function (client) {
             if ($scope.editMode) {
-                clientsService.updateClient(client).then(function () {
+                api('clients').update(client).then(function () {
                     $scope.editMode = false;
                     $uibModalInstance.close();
                 });
             } else {
-                clientsService.addClient(client).then(function () {
+                api('clients').add(client).then(function () {
                     $scope.clients.push(client);
                     $uibModalInstance.close();
                 });

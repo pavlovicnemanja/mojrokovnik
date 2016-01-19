@@ -1,8 +1,8 @@
 'use strict';
 
-casesCtrl.$inject = ['$scope', 'casesService', 'clientsService', '$uibModal'];
-function casesCtrl($scope, casesService, clientsService, $uibModal) {
-    casesService.fetchCases().then(function (cases) {
+casesCtrl.$inject = ['$scope', 'api', '$uibModal'];
+function casesCtrl($scope, api, $uibModal) {
+    api('cases').fetch().then(function (cases) {
         $scope.cases = cases;
         $scope.selCase = cases[0];
     });
@@ -12,7 +12,7 @@ function casesCtrl($scope, casesService, clientsService, $uibModal) {
     };
 
     $scope.removeCase = function (cases) {
-        casesService.deleteCase(cases).then(function () {
+        api('cases').delete(cases).then(function () {
             $scope.cases = _.without($scope.cases, cases);
             $scope.selCase = $scope.cases[0];
         });
@@ -27,7 +27,7 @@ function casesCtrl($scope, casesService, clientsService, $uibModal) {
             $scope.editMode = false;
         }
 
-        clientsService.fetchClients().then(function (clients) {
+        api('clients').fetch().then(function (clients) {
             $scope.clients = clients;
         });
 
@@ -42,12 +42,12 @@ function casesCtrl($scope, casesService, clientsService, $uibModal) {
     function casesDialogCtrl($uibModalInstance) {
         $scope.save = function (cases) {
             if ($scope.editMode) {
-                casesService.updateCase(cases).then(function () {
+                api('cases').update(cases).then(function () {
                     $scope.editMode = false;
                     $uibModalInstance.close();
                 });
             } else {
-                casesService.addCase(cases).then(function () {
+                api('cases').add(cases).then(function () {
                     $scope.cases.push(cases);
                     $uibModalInstance.close();
                 });

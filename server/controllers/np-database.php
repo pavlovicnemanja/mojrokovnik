@@ -109,9 +109,9 @@ function updateDatabase($table, $identifier, $controller, $params, $mysqli) {
 
         foreach ($params as $var => $val) {
             if ($identifier === $var) {
-                $identifier = $var . '= "' . $val . '"';
+                $identifier = $var . '="' . $val . '"';
             } else {
-                $sql .= $var . '= "' . $val . '"';
+                $sql .= $var . '="' . $val . '"';
 
                 if ($i !== $paramLength - 1) {
                     $sql .= ', ';
@@ -139,9 +139,11 @@ function updateDatabase($table, $identifier, $controller, $params, $mysqli) {
  * @param {string} $sql
  */
 
-function markForDelete($table, $identifier, $controller, $flag, $mysqli) {
-    if (!empty($identifier) && !empty($flag)) {
-        $sql = 'UPDATE ' . $table . ' SET ' . $flag . '=1' . ' WHERE ' . $identifier . ' AND ' . $controller;
+function markForDelete($table, $identifier, $controller, $mysqli) {
+    if (!empty($identifier)) {
+        $flag = substr($identifier, 0, strpos($identifier, '_id')) . '_delete';
+
+        $sql = 'UPDATE ' . $table . ' SET ' . $flag . ' = 1' . ' WHERE ' . $identifier . ' AND ' . $controller;
 
         $mysqli->query('SET NAMES utf8');
 

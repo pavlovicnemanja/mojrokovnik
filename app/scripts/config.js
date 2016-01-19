@@ -1,10 +1,10 @@
 'use strict';
 
-mojrokovnikAuth.$inject = ['userService', '$cookies'];
-function mojrokovnikAuth(userService, $cookies) {
+mojrokovnikAuth.$inject = ['api', '$cookies'];
+function mojrokovnikAuth(api, $cookies) {
     var self = this;
 
-    userService.fetchUser().then(function (user) {
+    api('users').fetch().then(function (user) {
         if (user) {
             self.user = user;
         }

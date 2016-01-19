@@ -99,7 +99,7 @@ function caseCreateTable($mysqli) {
 }
 
 function calendarCreateTable($mysqli) {
-    $sql = "CREATE TABLE IF NOT EXISTS calendar (
+    $sql = "CREATE TABLE IF NOT EXISTS calendars (
             calendar_id         int(11) NOT NULL AUTO_INCREMENT,
             user_id             int(11) NOT NULL,
             client_id           int(11),

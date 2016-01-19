@@ -9,73 +9,75 @@ secure_session_start();
 
 if (login_check($mysqli) == true) {
 
-    function setCase($mysqli) {
+    function set($table, $getters, $mysqli) {
         $params = array();
-        $getters = sanitize($_GET, $mysqli);
 
         if (!empty($getters)) {
             $params = $getters;
-            $table = "cases";
-            
+
             $params['user_id'] = $_SESSION['user_id'];
 
             setDatabase($table, $params, $mysqli);
         }
     }
 
-    function getCase($mysqli) {
+    function get($table, $getters, $mysqli) {
         $params = array();
-        $getters = sanitize($_GET, $mysqli);
 
-        $sql = "SELECT * FROM cases";
+        $sql = "SELECT * FROM " . $table;
 
         if (!empty($getters)) {
             $params = $getters;
         }
-        
+
         $params['user_id'] = $_SESSION['user_id'];
-        $params['case_delete'] = 0;
 
         getDatabase($sql, $params, $mysqli);
     }
 
-    function updateCase($mysqli) {
+    function update($table, $getters, $mysqli) {
         $params = array();
-        $getters = sanitize($_GET, $mysqli);
 
         if (!empty($getters)) {
             $params = $getters;
-            $table = "cases";
-            $identifier = "case_id";
+
+            $identifier = substr($table, 0, -1) . '_id';
             $controller = "user_id = " . $_SESSION['user_id'];
 
             updateDatabase($table, $identifier, $controller, $params, $mysqli);
         }
     }
 
-    function deleteCase($mysqli) {
-            $params = array();
-            $getters = sanitize($_GET, $mysqli);
+    function delete($table, $getters, $mysqli) {
+        $params = array();
 
-            if (!empty($getters)) {
-                $flag = 'case_delete';
-                $table = "cases";
-                $identifier = "case_id = " . $getters['case_id'];
-                $controller = "user_id = " . $_SESSION['user_id'];
+        if (!empty($getters)) {
 
-                markForDelete($table, $identifier, $controller, $flag, $mysqli);
-            }
+            $identifier = substr($table, 0, -1) . '_id';
+            $identifier .= " = " . $getters[$identifier];
+            $controller = "user_id = " . $_SESSION['user_id'];
+
+            markForDelete($table, $identifier, $controller, $mysqli);
+        }
     }
 
+    function removeKey($value, $array) {
+        unset($array[$value]);
+        return $array;
+    }
+
+    $table = sanitize($_GET['table'], $mysqli);
+    $getters = sanitize(removeKey('table', $_GET), $mysqli);
     $method = sanitize($_SERVER['REQUEST_METHOD'], $mysqli);
+
     switch ($method) {
-        case 'POST' : setCase($mysqli);
+        case 'POST' : set($table, $getters, $mysqli);
             break;
-        case 'GET' : getCase($mysqli);
+        case 'GET' : get($table, $getters, $mysqli);
             break;
-        case 'PUT' : updateCase($mysqli);
+        case 'PUT' : update($table, $getters, $mysqli);
             break;
-        case 'DELETE' : deleteCase($mysqli);
+        case 'DELETE' : delete($table, $getters, $mysqli);
             break;
     }
 } else {
