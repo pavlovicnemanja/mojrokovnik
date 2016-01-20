@@ -1,6 +1,6 @@
 <div clients-sidenav class="sidenav-section">
     <div class="topnav-section"></div>
-    <div class="sidenav-item" ng-repeat="client in clients track by client.client_id" ng-class="{active: client.client_id === selClient.client_id}" ng-click="selectClient(client)">
+    <div class="sidenav-item" ng-repeat="client in clients track by client.client_id" ng-class="{active: client.client_id === sClient.client_id}" ng-click="selectClient(client)">
         {{client.client_name}} {{client.client_surname}}
         <span class="detail-info">
             <i ng-if="client.client_city">{{client.client_city}}</i>
@@ -15,9 +15,13 @@
 <div clients-template class="content-section">
     <md-button class="md-raised md-primary" ng-click="showDialog(selClient)">Edit</md-button>
     <md-button class="md-raised md-warn" ng-click="removeClient(selClient)">Delete</md-button>
-    {{selClient.client_name}}
-    {{selClient.client_surname}}
-    {{selClient.client_city}}
-    {{selClient.client_state}}
-    {{selClient.client_phone}}
+    {{sClient.client_name}}
+    {{sClient.client_surname}}
+    {{sClient.client_city}}
+    {{sClient.client_state}}
+    {{sClient.client_phone}}
+
+    <div class="cases">
+        <div class="case" ng-repeat="ucase in cases track by ucase.case_id">{{ucase.case_name}}</div>
+    </div>
 </div>

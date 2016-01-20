@@ -4,6 +4,7 @@ require_once 'controllers/np-connect.php';
 require_once 'controllers/np-login.php';
 require_once 'controllers/np-sanitize.php';
 require_once 'controllers/np-database.php';
+require_once 'controllers/php-logger.php';
 
 secure_session_start();
 

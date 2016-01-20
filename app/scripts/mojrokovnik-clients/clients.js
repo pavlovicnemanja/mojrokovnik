@@ -3,19 +3,27 @@
 clientsCtrl.$inject = ['$scope', 'api', '$uibModal'];
 function clientsCtrl($scope, api, $uibModal) {
 
-    api('clients').fetch().then(function (clients) {
+    api('clients').fetch({client_delete: 0}).then(function (clients) {
         $scope.clients = clients;
-        $scope.selClient = clients[0];
+        $scope.sClient = clients[0];
+
+        api('cases').fetch({client_id: clients[0].client_id}).then(function (cases) {
+            $scope.cases = cases;
+        });
     });
 
     $scope.selectClient = function (client) {
-        $scope.selClient = client;
+        $scope.sClient = client;
+
+        api('cases').fetch({client_id: client.client_id}).then(function (cases) {
+            $scope.cases = cases;
+        });
     };
 
     $scope.removeClient = function (client) {
         api('clients').delete(client).then(function () {
             $scope.clients = _.without($scope.clients, client);
-            $scope.selClient = $scope.clients[0];
+            $scope.sClient = $scope.clients[0];
         });
     };
 
@@ -36,6 +44,10 @@ function clientsCtrl($scope, api, $uibModal) {
         });
     };
 
+    /*
+     * Clients Dialog Controller
+     * Controls adding and editing cliens to database
+     */
     function clientDialogCtrl($uibModalInstance) {
         $scope.save = function (client) {
             if ($scope.editMode) {

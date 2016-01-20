@@ -2,13 +2,22 @@
 
 casesCtrl.$inject = ['$scope', 'api', '$uibModal'];
 function casesCtrl($scope, api, $uibModal) {
-    api('cases').fetch().then(function (cases) {
+
+    api('cases').fetch({case_delete: 0}).then(function (cases) {
         $scope.cases = cases;
-        $scope.selCase = cases[0];
+        $scope.sCase = cases[0];
+
+        api('clients').fetch({client_id: cases[0].client_id}).then(function (client) {
+            $scope.client = client[0];
+        });
     });
 
-    $scope.selectCase = function (cases) {
-        $scope.selCase = cases;
+    $scope.selectCase = function (ucase) {
+        $scope.sCase = ucase;
+
+        api('clients').fetch({client_id: ucase.client_id}).then(function (client) {
+            $scope.client = client[0];
+        });
     };
 
     $scope.removeCase = function (cases) {
@@ -27,7 +36,7 @@ function casesCtrl($scope, api, $uibModal) {
             $scope.editMode = false;
         }
 
-        api('clients').fetch().then(function (clients) {
+        api('clients').fetch({client_delete: 0}).then(function (clients) {
             $scope.clients = clients;
         });
 

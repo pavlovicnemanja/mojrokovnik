@@ -79,7 +79,7 @@ function secure_session_start() {
     // Sets the session name to the one set above.
     session_name($session_name);
     session_start();            // Start the PHP session 
-    session_regenerate_id(true);    // regenerated the session, delete the old one. 
+    session_regenerate_id();    // regenerated the session, delete the old one.
 }
 
 function checkbrute($user_id, $mysqli) {
@@ -106,7 +106,7 @@ function checkbrute($user_id, $mysqli) {
 }
 
 function login_check($mysqli) {
-    // Check if all session variables are set 
+    // Check if all session variables are set
     if (isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) {
 
         $user_id = $_SESSION['user_id'];

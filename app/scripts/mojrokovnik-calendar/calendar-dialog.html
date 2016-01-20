@@ -21,11 +21,17 @@
         </md-input-container>
         <md-input-container>
             <label translate>Odnosi se na klijenta</label>
+            <md-select ng-model="calendar.client_id">
+                <md-option ng-repeat="client in clients track by client.client_id" value="{{client.client_id}}">{{client.client_name}} {{client.client_surname}}</md-option>
+            </md-select>
         </md-input-container>
     </div>
     <div class="row">
         <md-input-container>
             <label translate>Odnosi se na predmet</label>
+            <md-select ng-model="calendar.case_id">
+                <md-option ng-repeat="ucase in cases track by ucase.case_id" value="{{ucase.case_id}}">{{ucase.case_name}}</md-option>
+            </md-select>
         </md-input-container>
 
         <uib-datepicker ng-model="calendar.calendar_startDate"></uib-datepicker>
