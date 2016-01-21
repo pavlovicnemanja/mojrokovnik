@@ -60,7 +60,8 @@ function calendarTemplate(api) {
                     lang: 'sr',
                     scrollTime: '08:00:00',
                     defaultView: 'agendaWeek',
-                    timezone: 'local',
+                    slotDuration: '00:15:00',
+                    timezone: 'UTC',
                     selectable: true,
                     editable: true,
                     eventLimit: true,
@@ -70,7 +71,7 @@ function calendarTemplate(api) {
                     }
                 });
             }
-            
+
         }
     };
 }
@@ -87,13 +88,9 @@ function calendarCtrl($scope, $q, $uibModal, api) {
      */
     $scope.showDialog = function (startDate, endDate) {
         $scope.calendar = {
-            calendar_startDate: startDate._d,
-            calendar_endDate: endDate._d
-        };
-
-        $scope.timetable = {
-            timetable_startTime: startDate._d,
-            timetabe_duration: moment(endDate).subtract(moment(startDate))
+            calendar_startDate: startDate,
+            calendar_endDate: endDate,
+            calendar_duration: (moment(endDate) - moment(startDate)) / 60000
         };
 
         $uibModal.open({
@@ -126,28 +123,22 @@ function calendarCtrl($scope, $q, $uibModal, api) {
      * Controls saving data to database
      */
     function calendarDialogCtrl($uibModalInstance) {
-        $scope.save = function (calendar, timetable) {
-
-            var startTime = timetable ? moment(timetable.timetbale_startTime).format('HH:mm:ss') : moment().format('HH:mm:ss'),
-                startDate = moment(calendar.calendar_startDate).format('YYYY-MM-DD');
-
-            var endTime = timetable ? moment(timetable.timetable_duration).format('HH:mm:ss') : moment().format('HH:mm:ss'),
-                endDate = moment(calendar.calendar_endDate).format('YYYY-MM-DD');
-
-            calendar.calendar_startDate = new Date(startTime + ' ' + startDate);
-            calendar.calendar_endDate = new Date(endTime + ' ' + endDate);
+        $scope.save = function (calendar) {
+            calendar.calendar_startDate = calendar.calendar_startDate._d;
+            calendar.calendar_endDate = moment(calendar.calendar_startDate).add(calendar.calendar_duration, 'm')._d;
+            calendar = _.omit(calendar, 'calendar_duration');
 
             api('calendars').add(calendar).then(function () {
                 $scope.createEvent(calendar);
                 $uibModalInstance.close();
             });
         };
+
         $scope.cancel = function () {
             $uibModalInstance.dismiss();
         };
     }
 }
-
 
 
 angular.module('mojrokovnik.calendar', ['ngMaterial', 'ui.bootstrap'])

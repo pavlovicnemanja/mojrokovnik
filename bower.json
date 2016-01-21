@@ -17,7 +17,8 @@
     "underscore": "~1.8.3",
     "jquery": "2.1.4",
     "jquery-ui": "1.11.2",
-    "fullcalendar": "~2.5.0",
-    "normalize-css": "normalize.css#~3.0.3"
+    "fullcalendar": "~2.6.0",
+    "normalize-css": "normalize.css#~3.0.3",
+    "eonasdan-bootstrap-datetimepicker": "~4.17.37"
   }
 }

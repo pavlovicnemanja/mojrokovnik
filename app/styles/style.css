@@ -49,6 +49,12 @@ button:focus,
 .md-select-menu-container {
   z-index: 2001;
 }
+.md-toast.success {
+  background-color: #0CB976;
+}
+.md-toast.error {
+  background-color: #DE5307;
+}
 
 /* Flex */
 #main-container {

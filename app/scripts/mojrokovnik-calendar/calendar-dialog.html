@@ -34,13 +34,12 @@
             </md-select>
         </md-input-container>
 
-        <uib-datepicker ng-model="calendar.calendar_startDate"></uib-datepicker>
-        <uib-timepicker ng-model="timetable.timetable_startTime" show-meridian="false"></uib-timepicker>
+        <div mr-datetime-picker data-model="calendar.calendar_startDate"></div>
     </div>
 
     <md-input-container>
         <label translate>Trajanje</label>
-        <input type="text" ng-model="timetable.timetable_duration">
+        <input type="text" ng-model="calendar.calendar_duration">
     </md-input-container>
 </div>
 <div class="modal-footer">

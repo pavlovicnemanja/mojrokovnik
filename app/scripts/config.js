@@ -42,6 +42,7 @@ angular.module('mojrokovnik', [
     'mojrokovnik.login',
     'mojrokovnik.navigation',
     'mojrokovnik.notify',
+    'mojrokovnik.ui',
 
     'mojrokovnik.clients',
     'mojrokovnik.calendar',
