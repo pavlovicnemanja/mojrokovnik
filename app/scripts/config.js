@@ -37,11 +37,12 @@ function mojrokovnikConf($routeProvider) {
 }
 
 angular.module('mojrokovnik', [
-    'ngRoute', 'ngCookies',
+    'ngRoute', 'ngCookies', 'pascalprecht.translate',
     'mojrokovnik.api',
     'mojrokovnik.login',
     'mojrokovnik.navigation',
     'mojrokovnik.notify',
+    'mojrokovnik.translate',
     'mojrokovnik.ui',
 
     'mojrokovnik.clients',

@@ -5,71 +5,77 @@
 
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Klijent</label>
-                <md-select ng-model="newCase.client_id">
+                <md-select ng-model="newCase.client_id" ng-change="initCaseName(newCase)">
                     <md-option ng-repeat="client in clients track by client.client_id" value="{{client.client_id}}">{{ client.client_name}} {{ client.client_surname}}, {{ client.client_city}}</md-option>
                 </md-select>
             </md-input-container>
         </div>
-        <div class="col-md-6">
-            <md-input-container>
-                <label translate>Tip suprotne strane</label>
-                <input type="text" ng-model="newCase.case_rivalType">
-            </md-input-container>
-        </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <md-input-container>
+                <label translate>Tip suprotne strane</label>
+                <md-select ng-model="newCase.case_rivalType">
+                    <md-option ng-repeat="rivalType in data.rivalType" value="{{rivalType}}">{{rivalType}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="col-md-4">
             <md-input-container>
                 <label translate>Ime suprotne strane</label>
                 <input type="text" ng-model="newCase.case_rivalName">
             </md-input-container>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <md-input-container>
                 <label translate>Prezime suprotne strane</label>
-                <input type="text" ng-model="newCase.case_rivalSurname">
+                <input type="text" ng-model="newCase.case_rivalSurname" ng-change="initCaseName(newCase)">
             </md-input-container>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <md-input-container>
-                <label translate>Tip predmeta</label>
-                <input type="text" ng-model="newCase.case_type">
+                <label translate>Vrsta</label>
+                <md-select ng-model="newCase.case_type" ng-change="initCaseName(newCase)">
+                    <md-option ng-repeat="caseType in data.caseType" value="{{caseType}}">{{caseType}}</md-option>
+                </md-select>
             </md-input-container>
         </div>
         <div class="col-md-6">
             <md-input-container>
                 <label translate>Bliže određenje predmeta / Osnov</label>
-                <input type="text" ng-model="newCase.case_element">
+                <md-select ng-model="newCase.case_element">
+                    <md-option ng-repeat="caseElement in data.caseElement" value="{{caseElement}}">{{caseElement}}</md-option>
+                </md-select>
             </md-input-container>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <md-input-container>
                 <label translate>Jedinstveni naziv predmeta</label>
                 <input type="text" ng-model="newCase.case_name">
             </md-input-container>
         </div>
-        <div class="col-md-6">
+    </div>
+    <div class="row">
+        <div class="col-md-4">
             <md-input-container>
                 <label translate>Poslovni broj (veće)</label>
                 <input type="text" ng-model="newCase.case_businessCouncil">
             </md-input-container>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <md-input-container>
                 <label translate>Poslovni broj (oznaka)</label>
                 <input type="text" ng-model="newCase.case_businessLabel">
             </md-input-container>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <md-input-container>
                 <label translate>Poslovni broj (broj)</label>
                 <input type="text" ng-model="newCase.case_businessNumber">
@@ -129,6 +135,6 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="save(newCase)" translate>Sačuvaj</button>
-    <button class="btn" type="button" ng-click="cancel()" translate>Otkaži</button>
+    <button class="btn btn--rounded btn--dark" type="button" ng-click="cancel()" translate>Odustani</button>
+    <button class="btn btn--rounded btn--orange" type="button" ng-click="save(newCase)" translate>Sačuvaj predmet</button>
 </div>

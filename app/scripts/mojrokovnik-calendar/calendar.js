@@ -19,7 +19,8 @@ function calendarTemplate(api) {
                     filterEvents.push({
                         title: item.calendar_name + ' - ' + item.calendar_comment,
                         start: item.calendar_startDate,
-                        end: item.calendar_endDate
+                        end: item.calendar_endDate,
+                        data: item
                     });
                 });
 
@@ -36,7 +37,8 @@ function calendarTemplate(api) {
                 var eventData = {
                     title: event.calendar_name + ' - ' + event.calendar_comment,
                     start: event.calendar_startDate,
-                    end: event.calendar_endDate
+                    end: event.calendar_endDate,
+                    data: event
                 };
                 element.fullCalendar('renderEvent', eventData, true);
                 element.fullCalendar('unselect');
@@ -68,6 +70,16 @@ function calendarTemplate(api) {
                     events: events,
                     select: function (startDate, endDate) {
                         scope.showDialog(startDate, endDate);
+                    },
+                    eventClick: function(event) {
+                        scope.showDialog(event.start, event.end, event.data);
+                        console.log(event.data);
+                    },
+                    eventDrop: function(event) {
+                        scope.showDialog(event.start, event.end, event.data);
+                    },
+                    eventResize: function(event) {
+                        scope.showDialog(event.start, event.end, event.data);
                     }
                 });
             }
@@ -83,15 +95,24 @@ function calendarCtrl($scope, $q, $uibModal, api) {
     /*
      * Triggering modal for adding new event to calendar
      *
-     * @param {type} startDate
-     * @param {type} endDate
+     * @param {moment} startDate
+     * @param {moment} endDate
      */
-    $scope.showDialog = function (startDate, endDate) {
-        $scope.calendar = {
-            calendar_startDate: startDate,
-            calendar_endDate: endDate,
-            calendar_duration: (moment(endDate) - moment(startDate)) / 60000
-        };
+    $scope.showDialog = function (startDate, endDate, data) {
+
+        if (data) {
+            $scope.calendar = data;
+            $scope.calendar.calendar_startDate = startDate;
+            $scope.calendar.calendar_endDate = endDate;
+            $scope.calendar.calendar_duration = (moment(endDate) - moment(startDate)) / 60000;
+
+        } else {
+            $scope.calendar = {
+                calendar_startDate: startDate,
+                calendar_endDate: endDate,
+                calendar_duration: (moment(endDate) - moment(startDate)) / 60000
+            };
+        }
 
         $uibModal.open({
             animation: true,
@@ -123,15 +144,27 @@ function calendarCtrl($scope, $q, $uibModal, api) {
      * Controls saving data to database
      */
     function calendarDialogCtrl($uibModalInstance) {
+        /*
+         * Saving event to database
+         * @param {object} calendar
+         */
         $scope.save = function (calendar) {
             calendar.calendar_startDate = calendar.calendar_startDate._d;
             calendar.calendar_endDate = moment(calendar.calendar_startDate).add(calendar.calendar_duration, 'm')._d;
             calendar = _.omit(calendar, 'calendar_duration');
 
-            api('calendars').add(calendar).then(function () {
-                $scope.createEvent(calendar);
-                $uibModalInstance.close();
-            });
+            if (calendar.calendar_id) {
+                api('calendars').update(calendar).then(function () {
+                    $uibModalInstance.close();
+                });
+
+            } else {
+                api('calendars').add(calendar).then(function (data) {
+                    calendar.calendar_id = data.id;
+                    $scope.createEvent(calendar);
+                    $uibModalInstance.close();
+                });
+            }
         };
 
         $scope.cancel = function () {

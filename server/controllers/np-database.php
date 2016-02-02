@@ -87,7 +87,10 @@ function setDatabase($table, $params, $mysqli) {
         $mysqli->query('SET NAMES utf8');
 
         if ($mysqli->query($sql) === TRUE) {
-            echo json_encode(array('msg' => 'Total rows updated: ' . $mysqli->affected_rows));
+            echo json_encode(array(
+                'msg' => 'Total rows updated: ' . $mysqli->affected_rows,
+                'id' => $mysqli->insert_id
+            ));
         } else {
             echo json_encode(array("msg" => 'Error setting database: ' . $mysqli->error));
         }

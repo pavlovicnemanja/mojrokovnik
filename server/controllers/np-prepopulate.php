@@ -104,7 +104,7 @@ function calendarCreateTable($mysqli) {
             user_id             int(11) NOT NULL,
             client_id           int(11),
             case_id             int(11),
-            calendar_type       varchar(32) CHARACTER SET utf8 NOT NULL,
+            calendar_type       int(11) NOT NULL,
             calendar_name       varchar(64) CHARACTER SET utf8 NOT NULL,
             calendar_startDate  timestamp NOT NULL,
             calendar_endDate    timestamp,

@@ -3,21 +3,19 @@
 casesCtrl.$inject = ['$scope', 'api', '$uibModal'];
 function casesCtrl($scope, api, $uibModal) {
 
+    api('clients').fetch({client_delete: 0}).then(function (clients) {
+        $scope.clients = clients;
+    });
+
     api('cases').fetch({case_delete: 0}).then(function (cases) {
         $scope.cases = cases;
         $scope.sCase = cases[0];
-
-        api('clients').fetch({client_id: cases[0].client_id}).then(function (client) {
-            $scope.client = client[0];
-        });
+        $scope.client = $scope.getClient(cases[0].client_id);
     });
 
     $scope.selectCase = function (ucase) {
         $scope.sCase = ucase;
-
-        api('clients').fetch({client_id: ucase.client_id}).then(function (client) {
-            $scope.client = client[0];
-        });
+        $scope.client = $scope.getClient(ucase.client_id);
     };
 
     $scope.removeCase = function (cases) {
@@ -25,6 +23,18 @@ function casesCtrl($scope, api, $uibModal) {
             $scope.cases = _.without($scope.cases, cases);
             $scope.selCase = $scope.cases[0];
         });
+    };
+
+    $scope.getClient = function (client_id) {
+        return _.find($scope.clients, function (client) {
+            return client.client_id == client_id;
+        });
+    };
+
+    $scope.initCaseName = function (newCase) {
+        newCase.case_name =
+                $scope.getClient(newCase.client_id).client_surname + ' / ' +
+                newCase.case_rivalSurname + ' / ' + newCase.case_type;
     };
 
     $scope.showDialog = function (cases) {
@@ -36,16 +46,31 @@ function casesCtrl($scope, api, $uibModal) {
             $scope.editMode = false;
         }
 
-        api('clients').fetch({client_delete: 0}).then(function (clients) {
-            $scope.clients = clients;
-        });
-
         $uibModal.open({
             animation: true,
             scope: $scope,
+            size: 'lg',
             templateUrl: 'scripts/mojrokovnik-cases/cases-dialog.html',
             controller: casesDialogCtrl
         });
+
+        // CASES CUSTOM DATA
+        $scope.data = {
+            rivalType: [
+                'Tužilac', 'Tuženi', 'Poverilac', 'Dužnik', 'Usvojilac', 'Usvojenik', 'Izvršni poverilac', 'Izvršni dužnik',
+                'Predlagač', 'Protivnik predlagača', 'Privatni tužilac', 'Okrivljeni', 'Treće lice', 'Oštećeni'
+            ],
+            caseType: [
+                'Izvršni postupak', 'Krivični postupak', 'Parnični postupak', 'Prekršajni postupak',
+                'Privredno pravo', 'Upravni postupak i sporovi', 'Vanparnični postupak', 'Ostalo'
+            ],
+            caseElement: [
+                'Bračni spor', 'Izdržavanje', 'Kolektivni ugovori  spor', 'Materinstvo i očinstvo', 'Naknada štete', 'Nasledni spor',
+                'Obligacioni spor', 'Platni nalog', 'Poništaj usvojenja', 'Privredni spor', 'Radni spor', 'Roditeljsko pravo', 'Smetanje državine',
+                'Spor  povreda žiga ili firme', 'Spor authorskih prava', 'Spor male vrednosti', 'Stambeni spor', 'Svojinski spor',
+                'Zaštita od nasilja u porodici', 'Zaštita prava deteta', 'Ostalo'
+            ]
+        };
     };
 
     function casesDialogCtrl($uibModalInstance) {

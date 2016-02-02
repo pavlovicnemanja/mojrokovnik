@@ -1,17 +1,18 @@
 <div class="modal-header">
-    <h3 class="modal-title">Dodaj obavezu</h3>
+    <h3 class="modal-title" ng-if="!calendar.calendar_id">Dodaj obavezu</h3>
+    <h3 class="modal-title" ng-if="calendar.calendar_id">Izmeni obavezu</h3>
 </div>
 <div class="modal-body">
     <div class="row">
         <md-input-container>
             <label translate>Tip obaveze</label>
-            <md-select ng-model="calendar.calendar_type">
+            <md-select ng-model="calendar.calendar_type" required>
                 <md-option ng-repeat="type in types" value="{{type.value}}">{{type.name}}</md-option>
             </md-select>
         </md-input-container>
         <md-input-container>
             <label translate>Naziv obaveze</label>
-            <input type="text" ng-model="calendar.calendar_name">
+            <input type="text" ng-model="calendar.calendar_name" required>
         </md-input-container>
     </div>
     <div class="row">
@@ -19,9 +20,10 @@
             <label translate>Detaljan opis</label>
             <input type="text" ng-model="calendar.calendar_comment">
         </md-input-container>
+        <input type="text" ng-model="calendar.client_id" uib-typeahead="client.client_id as client.client_name + ' ' + client.client_surname for client in clients" class="form-control">
         <md-input-container>
             <label translate>Odnosi se na klijenta</label>
-            <md-select ng-model="calendar.client_id">
+            <md-select ng-model="calendar.client_id" required>
                 <md-option ng-repeat="client in clients track by client.client_id" value="{{client.client_id}}">{{client.client_name}} {{client.client_surname}}</md-option>
             </md-select>
         </md-input-container>
@@ -43,6 +45,6 @@
     </md-input-container>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="save(calendar, timetable)" translate>Sačuvaj</button>
+    <button class="btn btn-primary" type="submit" ng-click="save(calendar, timetable)" translate>Sačuvaj</button>
     <button class="btn" type="button" ng-click="cancel()" translate>Otkaži</button>
 </div>

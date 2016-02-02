@@ -44,6 +44,48 @@ button, .btn {
     }
 }
 
+.btn--rounded {
+    padding: 15px;
+    border-radius: 30px;
+}
+
+.btn--dark {
+    color: @white;
+    background-color: @mr-violet;
+    &:hover, &:focus {
+        color: @white;
+        background-color: @mr-blue;
+    }
+}
+
+.btn-group--inline {
+    button, .btn {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+// INPUT FIELDS
+.searchbar {
+    border: 0;
+    padding: 5px;
+    margin: 10px 0;
+    min-width: 250px;
+    border-radius: 30px;
+    text-indent: 15px;
+    border: 1px solid @white;
+    background-color: @white;
+    &:focus {
+        border: 1px solid @mr-orange;
+        outline: none;
+    }
+}
+
+.md-select-value *:first-child {
+    font-size: 14px;
+    font-weight: 700;
+}
+
 // ANGULAR MATERIAL FIXES
 .md-select-menu-container {
     z-index: 2001;
@@ -56,5 +98,19 @@ button, .btn {
     }
     &.error {
         background-color: #DE5307;
+    }
+}
+
+// COLUMNS
+.column {
+    width: 100%;
+}
+
+.columns-two {
+    font-size: 0;
+    .column {
+        display: inline-block;
+        vertical-align: middle;
+        width: 50%;
     }
 }
